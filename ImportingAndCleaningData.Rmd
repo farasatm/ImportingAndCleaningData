@@ -1,0 +1,72 @@
+---
+title: "ImportingAndCleaningData"
+author: "Moeen Farasat"
+date: "12/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Reference: https://geanders.github.io/RProgrammingForResearch/entering-and-cleaning-data-1.html
+
+
+```{r importing libraries}
+library("dplyr")
+```
+
+## Importing Data Set
+
+For example:
+
+```{r Importintg, echo=FALSE}
+carSales <- read.csv(file='Data/carSalesPrice.csv')
+
+head(carSales)
+
+## Selecting Single row
+carSales[1,]
+
+
+
+```
+
+```{r Cleaning by Replacing the column values}
+
+
+##let’s say we find out that the data collector made a mistake, and accidentally recorded Sedan 4D for Sedan 2D. In order to correct the data set, let’s replace ‘Sedan 4D’ with ‘Sedan 2D’ in the $Trim column:
+
+carSales$Trim<- ifelse(carSales$Trim=='Sedan 4D', 'Sedan 2D', carSales$Trim)
+carSales$Trim
+
+```
+
+
+```{r Renaming Column}
+
+colnames(x = carSales)
+
+carSales <- rename(.data = carSales,
+                     PriceInDollar = Price)
+head(x = carSales, 3)
+
+
+```
+```{r selecting dataset}
+
+select(.data = carSales, Make, Model, Doors)
+
+carSales <- select(.data = carSales, -Leather)
+head(x = carSales, n = 3)
+
+```
+```{r Arrange Dataset}
+carSales <- arrange(.data = carSales, Make)
+head(carSales)
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
